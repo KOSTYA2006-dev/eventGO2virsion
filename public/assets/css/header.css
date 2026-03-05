@@ -1,0 +1,188 @@
+.header {
+    background-color: #F7F7F7;
+    width: 100%;
+    padding: 20px 0;
+    height: auto;
+    margin-top: 15px;
+    border-radius: 20px;
+}
+
+.header__container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@media screen and (max-width: 1200px) {
+    .header__container {
+        padding: 0 30px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .header {
+        padding: 15px 0;
+        margin-top: 10px;
+        border-radius: 15px;
+    }
+    
+    .header__container {
+        padding: 0 20px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .header {
+        padding: 12px 0;
+        margin-top: 8px;
+        border-radius: 12px;
+    }
+    
+    .header__container {
+        padding: 0 15px;
+    }
+}
+
+.header-content{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+@media screen and (max-width: 768px) {
+    .header-content {
+        gap: 15px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .header-content {
+        gap: 10px;
+    }
+}
+
+.content__serch_btn{
+    border: none;
+    background: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.test:hover{
+
+}
+.content__profil_btn{
+    border: none;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 999px;
+    padding: 2px;
+}
+
+.content__serch_input{
+
+    padding: 5px;
+    width: 250px;
+    height: auto;
+    border: none;
+    background: none;
+    border-radius: 10px;
+    cursor: pointer;
+    outline: none;
+
+
+}
+
+.content__serch_input:hover{
+
+}
+
+.searchbox{
+    padding-right: 20px;
+    display: flex;
+    background: #efefef;
+    text-align: center;
+    padding: 5px;
+    border-radius: 7px;
+    margin-right: 30px;
+}
+
+@media screen and (max-width: 768px) {
+    .searchbox {
+        margin-right: 15px;
+        padding-right: 15px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .searchbox {
+        margin-right: 10px;
+        padding-right: 10px;
+    }
+    
+    .content__serch_input {
+        width: 150px;
+        font-size: 14px;
+    }
+}
+
+.header-content__rigth-content{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+@media screen and (max-width: 768px) {
+    .header-content__rigth-content {
+        gap: 10px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .header-content__rigth-content {
+        gap: 8px;
+    }
+}
+
+
+.menu-mob{
+    display: none;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.menu-mob:hover {
+    opacity: 0.7;
+}
+
+@media screen and (max-width: 768px) {
+    .menu-mob {
+        display: block;
+    }
+}
+
+.stoke-logo{
+ fill: #1D1D1D;
+}
+
+.stoke-logo2{
+    fill: #FF2929;
+}
+.header__logo__img:hover{
+    cursor: pointer;
+    transition: 0.4s ease;
+    fill: #DC143C;
+    color: #DC143C;
+
+}

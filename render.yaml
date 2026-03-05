@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: eventgo
+    env: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: DB_CONNECTION
+        fromDatabase:
+          name: eventgo-db
+          property: connectionString
+    healthCheckPath: /
+    autoDeploy: true
+
+databases:
+  - name: eventgo-db
+    databaseName: eventgo
+    user: eventgo
+    plan: free
+
