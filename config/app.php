@@ -61,7 +61,7 @@ return [
     */
 
     'contact_email' => env('CONTACT_EMAIL', 'info@eventgo.ru'),
-    'contact_phone' => env('CONTACT_PHONE', '+7 (999) 123-45-67'),
+    'contact_phone' => env('CONTACT_PHONE', '89094368010'),
     'event_date' => env('EVENT_DATE', '2026-10-21 18:00:00'),
 
     /*

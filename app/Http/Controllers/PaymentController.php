@@ -49,6 +49,28 @@ class PaymentController extends Controller
     public function success($id)
     {
         $order = Order::with(['customer', 'ticket', 'promoCode'])->findOrFail($id);
+
+        // На return_url вебхук может прийти чуть позже. Если payment_id уже есть — перепроверим статус через API.
+        if ($order->payment_status !== 'paid' && $order->payment_id) {
+            try {
+                $paymentInfo = $this->yooKassaService->getPaymentInfo($order->payment_id);
+                $status = $paymentInfo->getStatus();
+
+                if ($status === \YooKassa\Model\PaymentStatus::SUCCEEDED) {
+                    $order->update(['payment_status' => 'paid']);
+                    $this->generateAndSendReceipt($order);
+                } elseif ($status === \YooKassa\Model\PaymentStatus::CANCELED && $order->payment_status === 'pending') {
+                    $order->update(['payment_status' => 'cancelled']);
+                    $order->ticket?->increment('available_quantity', $order->quantity);
+                }
+            } catch (\Exception $e) {
+                Log::warning('Не удалось проверить статус платежа на return_url: ' . $e->getMessage(), [
+                    'order_id' => $order->id,
+                    'payment_id' => $order->payment_id,
+                ]);
+            }
+        }
+
         return view('order.success', compact('order'));
     }
 
@@ -146,6 +168,20 @@ class PaymentController extends Controller
                     'status' => 'ok',
                     'message' => 'Payment processed and emails sent'
                 ], 200);
+            } elseif ($status === 'cancelled' && $order->payment_status === 'pending') {
+                $order->update([
+                    'payment_status' => 'cancelled',
+                    'payment_id' => $result['payment_id'],
+                ]);
+
+                // Возвращаем билеты в наличие, т.к. заказ не будет оплачен
+                $order->loadMissing('ticket');
+                if ($order->ticket) {
+                    $order->ticket->increment('available_quantity', $order->quantity);
+                }
+
+                Log::info("Payment cancelled via YooKassa webhook for order {$order->order_number}");
+                return response()->json(['status' => 'ok'], 200);
             } elseif ($order->payment_status === 'paid') {
                 Log::info("Order {$order->order_number} already paid");
                 return response()->json(['status' => 'ok'], 200);

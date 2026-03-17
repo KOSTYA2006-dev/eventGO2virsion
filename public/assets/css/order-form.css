@@ -1,0 +1,256 @@
+/* order-form.css — страница оформления заказа */
+
+body { padding: 2rem 0; }
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+@media screen and (max-width: 1200px) {
+    .container { padding: 0 30px; }
+}
+
+@media screen and (max-width: 768px) {
+    .container { padding: 0 20px; }
+}
+
+@media screen and (max-width: 480px) {
+    .container { padding: 0 15px; }
+}
+
+.order-card {
+    background: radial-gradient(circle at top, #0b1120, #020617);
+    border: 1px solid rgba(12, 148, 136, 0.5);
+    border-radius: 12px;
+    box-shadow: 0 24px 55px rgba(15, 23, 42, 0.9);
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.order-header {
+    background: rgba(15, 23, 42, 0.95);
+    border-bottom: 1px solid rgba(12, 148, 136, 0.6);
+    padding: 2rem;
+    text-align: center;
+}
+
+.order-header h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #e6f7ee;
+    text-shadow: 0 0 10px rgba(15, 23, 42, 0.9);
+    letter-spacing: 2px;
+}
+
+.order-header .ticket-type {
+    display: inline-block;
+    background: rgba(100, 240, 163, 0.08);
+    border: 1px solid rgba(100, 240, 163, 0.6);
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    color: #64f0a3;
+}
+
+.order-content { padding: 2rem; }
+
+.ticket-summary {
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid rgba(12, 148, 136, 0.6);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.ticket-summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(30, 64, 175, 0.45);
+    color: #cbd5f5;
+}
+
+.ticket-summary-row:last-child {
+    border-bottom: none;
+    font-weight: bold;
+    font-size: 1.25rem;
+    margin-top: 0.5rem;
+    padding-top: 1rem;
+}
+
+.form-group { margin-bottom: 1.5rem; }
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #e6f7ee;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 1px solid rgba(51, 65, 85, 0.9);
+    border-radius: 5px;
+    font-size: 1rem;
+    font-family: 'Ubuntu', monospace;
+    background: rgba(15, 23, 42, 0.95);
+    color: #e6f7ee;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    box-shadow: 0 0 0 1px rgba(94, 234, 212, 0.6);
+    border-color: rgba(94, 234, 212, 0.8);
+}
+
+.form-group input::placeholder { color: #64748b; }
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.payment-method-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.payment-method-option { position: relative; }
+
+.payment-method-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+}
+
+.payment-method-option label {
+    display: block;
+    padding: 1rem;
+    border: 1px solid rgba(51, 65, 85, 0.9);
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    background: rgba(15, 23, 42, 0.95);
+    color: #e6f7ee;
+}
+
+.payment-method-option input[type="radio"]:checked + label {
+    background: radial-gradient(circle at top, rgba(56, 189, 248, 0.2), rgba(15, 23, 42, 0.98));
+    box-shadow: 0 0 18px rgba(15, 23, 42, 0.9);
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: auto;
+    margin-top: 0.25rem;
+    accent-color: #00ff41;
+}
+
+.checkbox-group label {
+    font-size: 0.875rem;
+    color: #cbd5f5;
+    line-height: 1.5;
+}
+
+.btn {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #0b1120, #020617);
+    color: #e6f7ee;
+    border: 1px solid rgba(100, 240, 163, 0.7);
+    border-radius: 5px;
+    font-size: 1.125rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Ubuntu', monospace;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn:hover {
+    background: linear-gradient(135deg, #111827, #020617);
+    box-shadow: 0 22px 40px rgba(15, 23, 42, 0.9);
+    transform: scale(1.02);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.error-message {
+    color: #ff0000;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 1rem;
+    color: #00ff41;
+    text-decoration: none;
+    font-size: 0.875rem;
+    opacity: 0.8;
+    transition: all 0.3s;
+}
+
+.back-link:hover {
+    opacity: 1;
+    text-shadow: 0 0 10px #00ff41;
+}
+
+@media (max-width: 768px) {
+    body { padding: 1rem 0; }
+    .form-row { grid-template-columns: 1fr; }
+    .order-card { border-radius: 8px; }
+    .order-header { padding: 1.5rem; }
+    .order-header h1 { font-size: 1.5rem; }
+    .order-content { padding: 1.5rem; }
+    .ticket-summary { padding: 1.25rem; }
+    .form-group { margin-bottom: 1.25rem; }
+    .form-group input,
+    .form-group select {
+        padding: 0.75rem;
+        font-size: 0.95rem;
+    }
+    .payment-method-group { grid-template-columns: 1fr; }
+    .btn { padding: 0.875rem 1.5rem; font-size: 1rem; }
+}
+
+@media (max-width: 480px) {
+    body { padding: 0.75rem 0; }
+    .order-header { padding: 1.25rem; }
+    .order-header h1 { font-size: 1.25rem; }
+    .order-content { padding: 1.25rem; }
+    .ticket-summary { padding: 1rem; }
+    .ticket-summary-row { padding: 0.5rem 0; font-size: 0.9rem; }
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { font-size: 0.9rem; }
+    .form-group input,
+    .form-group select {
+        padding: 0.7rem;
+        font-size: 0.9rem;
+    }
+    .btn { padding: 0.75rem 1.25rem; font-size: 0.95rem; }
+}

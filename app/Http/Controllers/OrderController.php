@@ -29,7 +29,6 @@ class OrderController extends Controller
             'email' => 'required|email|max:255',
             'activity_type' => 'required|in:podologist,aesthetician,manager',
             'personal_data_agreement' => 'required|accepted',
-            'promo_code' => 'nullable|string|exists:promo_codes,code',
             'payment_method' => 'required|in:qr,sbp',
         ]);
 
@@ -72,18 +71,7 @@ class OrderController extends Controller
             $ticketPrice = $ticket->price;
             $subtotal = $ticketPrice * $request->quantity;
             $discountAmount = 0;
-            $promoCode = null;
-
-            // Применение промокода
-            if ($request->promo_code) {
-                $promoCode = PromoCode::where('code', $request->promo_code)->first();
-                if ($promoCode && $promoCode->isValid()) {
-                    $discountAmount = $promoCode->calculateDiscount($subtotal);
-                    $promoCode->increment('used_count');
-                }
-            }
-
-            $totalAmount = $subtotal - $discountAmount;
+            $totalAmount = $subtotal;
 
             // Создание заказа
             $order = Order::create([
@@ -91,7 +79,7 @@ class OrderController extends Controller
                 'ticket_id' => $ticket->id,
                 'quantity' => $request->quantity,
                 'ticket_price' => $ticketPrice,
-                'promo_code_id' => $promoCode?->id,
+                'promo_code_id' => null,
                 'discount_amount' => $discountAmount,
                 'total_amount' => $totalAmount,
                 'payment_method' => $request->payment_method,
@@ -103,12 +91,62 @@ class OrderController extends Controller
 
             DB::commit();
 
-            return redirect()->route('payment.show', $order->id);
+            return redirect()->route('orders.checkout', $order->id);
 
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->withErrors(['error' => 'Произошла ошибка при создании заказа: ' . $e->getMessage()])->withInput();
         }
+    }
+
+    public function checkout($id)
+    {
+        $order = Order::with(['customer', 'ticket', 'promoCode'])->findOrFail($id);
+        return view('order.checkout', compact('order'));
+    }
+
+    public function applyPromo(Request $request, $id)
+    {
+        $order = Order::with(['ticket', 'promoCode'])->findOrFail($id);
+
+        if ($order->payment_status === 'paid') {
+            return redirect()->route('order.success', $order->id);
+        }
+
+        $data = $request->validate([
+            'promo_code' => ['nullable', 'string', 'max:50'],
+        ]);
+
+        $subtotal = (float) $order->ticket_price * (int) $order->quantity;
+
+        // Удаление промокода (пустое значение)
+        if (empty($data['promo_code'])) {
+            $order->update([
+                'promo_code_id' => null,
+                'discount_amount' => 0,
+                'total_amount' => $subtotal,
+            ]);
+
+            return redirect()->route('orders.checkout', $order->id)->with('success', 'Промокод удалён');
+        }
+
+        $promoCode = PromoCode::where('code', $data['promo_code'])->first();
+        if (!$promoCode || !$promoCode->isValid()) {
+            return redirect()->route('orders.checkout', $order->id)->withErrors([
+                'promo_code' => 'Промокод недействителен или истёк срок действия',
+            ]);
+        }
+
+        $discountAmount = $promoCode->calculateDiscount($subtotal);
+        $totalAmount = max(0, $subtotal - $discountAmount);
+
+        $order->update([
+            'promo_code_id' => $promoCode->id,
+            'discount_amount' => $discountAmount,
+            'total_amount' => $totalAmount,
+        ]);
+
+        return redirect()->route('orders.checkout', $order->id)->with('success', 'Промокод применён');
     }
 
     public function show($id)

@@ -11,11 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:admin');
-    }
-
     public function dashboard()
     {
         $totalOrders = Order::count();
@@ -89,6 +84,47 @@ class AdminController extends Controller
     {
         $promoCodes = PromoCode::withCount('orders')->orderBy('created_at', 'desc')->get();
         return view('admin.promo_codes.index', compact('promoCodes'));
+    }
+
+    public function storePromoCode(Request $request)
+    {
+        $data = $request->validate([
+            'code' => ['required', 'string', 'max:50', 'unique:promo_codes,code'],
+            'discount_type' => ['required', 'in:percentage,fixed'],
+            'discount_value' => ['required', 'numeric', 'min:0'],
+            'max_uses' => ['nullable', 'integer', 'min:1'],
+            'valid_from' => ['nullable', 'date'],
+            'valid_until' => ['nullable', 'date', 'after_or_equal:valid_from'],
+            'is_active' => ['sometimes', 'boolean'],
+        ]);
+
+        $data['is_active'] = $request->has('is_active');
+        $data['used_count'] = 0;
+
+        PromoCode::create($data);
+
+        return redirect()->route('admin.promo_codes.index')->with('success', 'Промокод создан');
+    }
+
+    public function updatePromoCode(Request $request, PromoCode $promoCode)
+    {
+        $data = $request->validate([
+            'discount_value' => ['required', 'numeric', 'min:0'],
+            'max_uses' => ['nullable', 'integer', 'min:1'],
+        ]);
+
+        $promoCode->update($data);
+
+        return redirect()->route('admin.promo_codes.index')->with('success', 'Промокод обновлён');
+    }
+
+    public function togglePromoCode(PromoCode $promoCode)
+    {
+        $promoCode->update([
+            'is_active' => ! $promoCode->is_active,
+        ]);
+
+        return redirect()->route('admin.promo_codes.index')->with('success', 'Статус промокода изменён');
     }
 
     public function verifyPayment($id)

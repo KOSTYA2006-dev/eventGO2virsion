@@ -22,12 +22,8 @@ class Admin extends Authenticatable
         'remember_token',
     ];
 
+    // Пароль хешируется через cast, кастомный мутатора не нужен
     protected $casts = [
         'password' => 'hashed',
     ];
-
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = Hash::make($value);
-    }
 }

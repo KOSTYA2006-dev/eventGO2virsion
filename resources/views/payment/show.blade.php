@@ -18,8 +18,8 @@
         }
 
         body {
-            background: #000;
-            color: #00ff41;
+            background: #050b10;
+            color: #e6f7ee;
             font-family: 'Ubuntu', monospace;
             min-height: 100vh;
             position: relative;
@@ -47,12 +47,12 @@
         .matrix-column {
             position: absolute;
             top: -100%;
-            color: #00ff41;
+            color: #64f0a3;
             font-family: 'Courier New', monospace;
             font-size: 14px;
             line-height: 1.2;
             animation: matrix-fall linear infinite;
-            text-shadow: 0 0 5px #00ff41;
+            text-shadow: 0 0 4px rgba(100, 240, 163, 0.7);
         }
 
         @keyframes matrix-fall {
@@ -89,11 +89,11 @@
         }
 
         .payment-card {
-            background: rgba(0, 0, 0, 0.9);
-            border: 2px solid #00ff41;
-            border-radius: 10px;
+            background: radial-gradient(circle at top, #0b1120, #020617);
+            border: 1px solid rgba(12, 148, 136, 0.5);
+            border-radius: 12px;
             padding: 2rem;
-            box-shadow: 0 0 30px rgba(0, 255, 65, 0.3);
+            box-shadow: 0 24px 55px rgba(15, 23, 42, 0.9);
             backdrop-filter: blur(10px);
         }
 
@@ -106,23 +106,23 @@
 
         .order-number {
             font-size: 1.5rem;
-            font-weight: bold;
-            color: #00ff41;
-            text-shadow: 0 0 10px #00ff41;
+            font-weight: 700;
+            color: #e6f7ee;
+            text-shadow: 0 0 10px rgba(15, 23, 42, 0.9);
             margin-bottom: 1rem;
             letter-spacing: 2px;
         }
 
         .order-amount {
             font-size: 3rem;
-            font-weight: bold;
-            color: #00ff41;
-            text-shadow: 0 0 20px #00ff41;
+            font-weight: 700;
+            color: #e6f7ee;
+            text-shadow: 0 0 16px rgba(15, 23, 42, 0.9);
             margin-bottom: 0.5rem;
         }
 
         .order-info p {
-            color: rgba(0, 255, 65, 0.8);
+            color: #cbd5f5;
             font-size: 1rem;
         }
 
@@ -139,10 +139,10 @@
         .payment-tab {
             flex: 1;
             padding: 1rem;
-            background: rgba(0, 255, 65, 0.1);
-            border: 2px solid #00ff41;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(51, 65, 85, 0.9);
             border-radius: 5px;
-            color: #00ff41;
+            color: #e6f7ee;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
@@ -152,13 +152,13 @@
         }
 
         .payment-tab:hover {
-            background: rgba(0, 255, 65, 0.2);
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+            background: rgba(15, 23, 42, 1);
+            box-shadow: 0 18px 30px rgba(15, 23, 42, 0.9);
         }
 
         .payment-tab.active {
-            background: rgba(0, 255, 65, 0.3);
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.7);
+            background: radial-gradient(circle at top, rgba(56, 189, 248, 0.2), rgba(15, 23, 42, 0.98));
+            box-shadow: 0 18px 30px rgba(15, 23, 42, 0.9);
         }
 
         .payment-content {
@@ -172,14 +172,14 @@
         .qr-code-container {
             text-align: center;
             padding: 2rem;
-            background: rgba(0, 255, 65, 0.05);
-            border: 1px solid #00ff41;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(12, 148, 136, 0.5);
             border-radius: 10px;
         }
 
         .qr-code-container h3 {
-            color: #00ff41;
-            text-shadow: 0 0 10px #00ff41;
+            color: #e6f7ee;
+            text-shadow: none;
             margin-bottom: 1.5rem;
             font-size: 1.25rem;
         }
@@ -187,41 +187,41 @@
         .qr-code-container img {
             max-width: 300px;
             width: 100%;
-            border: 2px solid #00ff41;
+            border: 1px solid rgba(148, 163, 184, 0.7);
             border-radius: 10px;
             padding: 1rem;
-            background: #000;
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+            background: #020617;
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.9);
         }
 
         .qr-code-container p {
-            color: rgba(0, 255, 65, 0.8);
+            color: #cbd5f5;
             margin-top: 1rem;
             font-size: 0.875rem;
         }
 
         .sbp-info {
             padding: 2rem;
-            background: rgba(0, 255, 65, 0.05);
-            border: 1px solid #00ff41;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(12, 148, 136, 0.5);
             border-radius: 10px;
         }
 
         .sbp-info h3 {
-            color: #00ff41;
-            text-shadow: 0 0 10px #00ff41;
+            color: #e6f7ee;
+            text-shadow: none;
             margin-bottom: 1rem;
             font-size: 1.5rem;
         }
 
         .sbp-info p {
-            color: rgba(0, 255, 65, 0.8);
+            color: #cbd5f5;
             margin-bottom: 1.5rem;
         }
 
         .bank-details {
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid #00ff41;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(51, 65, 85, 0.9);
             border-radius: 5px;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
@@ -231,8 +231,8 @@
             display: flex;
             justify-content: space-between;
             padding: 0.75rem 0;
-            border-bottom: 1px solid rgba(0, 255, 65, 0.3);
-            color: #00ff41;
+            border-bottom: 1px solid rgba(30, 64, 175, 0.45);
+            color: #cbd5f5;
         }
 
         .bank-details-row:last-child {
@@ -240,17 +240,17 @@
         }
 
         .bank-details-row span:first-child {
-            font-weight: bold;
-            text-shadow: 0 0 5px #00ff41;
+            font-weight: 600;
+            text-shadow: none;
         }
 
         .copy-btn {
             width: 100%;
             padding: 1rem;
-            background: rgba(0, 255, 65, 0.1);
-            border: 2px solid #00ff41;
-            border-radius: 5px;
-            color: #00ff41;
+            background: linear-gradient(135deg, #0b1120, #020617);
+            border: 1px solid rgba(100, 240, 163, 0.7);
+            border-radius: 6px;
+            color: #e6f7ee;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
@@ -260,13 +260,13 @@
         }
 
         .copy-btn:hover {
-            background: rgba(0, 255, 65, 0.2);
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+            background: linear-gradient(135deg, #111827, #020617);
+            box-shadow: 0 22px 40px rgba(15, 23, 42, 0.9);
         }
 
         .payment-details {
-            background: rgba(0, 255, 65, 0.05);
-            border: 1px solid #00ff41;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(12, 148, 136, 0.5);
             border-radius: 10px;
             padding: 1.5rem;
             margin-bottom: 2rem;
@@ -276,8 +276,8 @@
             display: flex;
             justify-content: space-between;
             padding: 0.75rem 0;
-            border-bottom: 1px solid rgba(0, 255, 65, 0.3);
-            color: #00ff41;
+            border-bottom: 1px solid rgba(30, 64, 175, 0.45);
+            color: #cbd5f5;
         }
 
         .payment-details-row:last-child {
@@ -286,16 +286,16 @@
             font-size: 1.25rem;
             margin-top: 0.5rem;
             padding-top: 1rem;
-            text-shadow: 0 0 10px #00ff41;
+            text-shadow: 0 0 10px rgba(15, 23, 42, 0.9);
         }
 
         .btn {
             width: 100%;
             padding: 1rem 2rem;
-            background: rgba(0, 255, 65, 0.1);
-            border: 2px solid #00ff41;
-            border-radius: 5px;
-            color: #00ff41;
+            background: linear-gradient(135deg, #0b1120, #020617);
+            border: 1px solid rgba(100, 240, 163, 0.7);
+            border-radius: 6px;
+            color: #e6f7ee;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
@@ -309,19 +309,20 @@
         }
 
         .btn:hover {
-            background: rgba(0, 255, 65, 0.2);
-            box-shadow: 0 0 30px rgba(0, 255, 65, 0.5);
+            background: linear-gradient(135deg, #111827, #020617);
+            box-shadow: 0 22px 40px rgba(15, 23, 42, 0.9);
             transform: scale(1.02);
         }
 
         .btn-success {
-            background: rgba(0, 255, 65, 0.2);
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            border-color: rgba(74, 222, 128, 0.9);
+            box-shadow: 0 18px 35px rgba(22, 163, 74, 0.7);
         }
 
         .btn-success:hover {
-            background: rgba(0, 255, 65, 0.3);
-            box-shadow: 0 0 30px rgba(0, 255, 65, 0.7);
+            background: linear-gradient(135deg, #16a34a, #15803d);
+            box-shadow: 0 22px 40px rgba(22, 163, 74, 0.8);
         }
 
         @media (max-width: 768px) {

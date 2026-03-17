@@ -30,6 +30,8 @@ Route::get('/tickets/{id}', [TicketController::class, 'show'])->name('tickets.sh
 Route::get('/order/{id}/form', [OrderController::class, 'showForm'])->name('orders.show');
 Route::post('/orders', [OrderController::class, 'create'])->name('orders.create');
 Route::get('/order/{id}/details', [OrderController::class, 'show'])->name('orders.details');
+Route::get('/order/{id}/checkout', [OrderController::class, 'checkout'])->name('orders.checkout');
+Route::post('/order/{id}/apply-promo', [OrderController::class, 'applyPromo'])->name('orders.apply_promo');
 
 // Оплата
 Route::get('/payment/{id}', [PaymentController::class, 'show'])->name('payment.show');
@@ -54,5 +56,8 @@ Route::prefix('admin')->group(function () {
         Route::get('/customers', [AdminController::class, 'customers'])->name('admin.customers.index');
         Route::get('/tickets', [AdminController::class, 'tickets'])->name('admin.tickets.index');
         Route::get('/promo-codes', [AdminController::class, 'promoCodes'])->name('admin.promo_codes.index');
+        Route::post('/promo-codes', [AdminController::class, 'storePromoCode'])->name('admin.promo_codes.store');
+        Route::patch('/promo-codes/{promoCode}', [AdminController::class, 'updatePromoCode'])->name('admin.promo_codes.update');
+        Route::patch('/promo-codes/{promoCode}/toggle', [AdminController::class, 'togglePromoCode'])->name('admin.promo_codes.toggle');
     });
 });

@@ -3,7 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Оплата успешна - Заказ №{{ $order->order_number }}</title>
+    <title>
+        @if($order->payment_status === 'paid')
+            Оплата успешна - Заказ №{{ $order->order_number }}
+        @elseif($order->payment_status === 'cancelled')
+            Оплата отменена - Заказ №{{ $order->order_number }}
+        @else
+            Статус оплаты - Заказ №{{ $order->order_number }}
+        @endif
+    </title>
     <link rel="stylesheet" href="{{ asset('assets/css/main-set.css') }}">
     <style>
         @font-face {
@@ -18,8 +26,8 @@
         }
 
         body {
-            background: #000;
-            color: #00ff41;
+            background: #050b10;
+            color: #e6f7ee;
             font-family: 'Ubuntu', monospace;
             min-height: 100vh;
             position: relative;
@@ -89,10 +97,10 @@
         }
 
         .success-card {
-            background: rgba(0, 0, 0, 0.9);
-            border: 2px solid #00ff41;
-            border-radius: 10px;
-            box-shadow: 0 0 30px rgba(0, 255, 65, 0.3);
+            background: radial-gradient(circle at top, #0b1120, #020617);
+            border: 1px solid rgba(12, 148, 136, 0.5);
+            border-radius: 12px;
+            box-shadow: 0 24px 55px rgba(15, 23, 42, 0.9);
             padding: 3rem 2rem;
             text-align: center;
             backdrop-filter: blur(10px);
@@ -117,22 +125,22 @@
 
         .success-title {
             font-size: 2.5rem;
-            font-weight: bold;
+            font-weight: 700;
             margin-bottom: 1rem;
-            color: #00ff41;
-            text-shadow: 0 0 20px #00ff41;
+            color: #e6f7ee;
+            text-shadow: 0 0 12px rgba(15, 23, 42, 0.9);
             letter-spacing: 2px;
         }
 
         .success-message {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             margin-bottom: 2rem;
-            color: rgba(0, 255, 65, 0.9);
+            color: #cbd5f5;
         }
 
         .order-details {
-            background: rgba(0, 255, 65, 0.05);
-            border: 1px solid #00ff41;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(12, 148, 136, 0.6);
             border-radius: 10px;
             padding: 2rem;
             margin: 2rem 0;
@@ -143,8 +151,8 @@
             display: flex;
             justify-content: space-between;
             padding: 1rem 0;
-            border-bottom: 1px solid rgba(0, 255, 65, 0.3);
-            color: #00ff41;
+            border-bottom: 1px solid rgba(30, 64, 175, 0.45);
+            color: #cbd5f5;
         }
 
         .detail-row:last-child {
@@ -153,30 +161,30 @@
             font-size: 1.25rem;
             margin-top: 0.5rem;
             padding-top: 1rem;
-            text-shadow: 0 0 10px #00ff41;
+            text-shadow: 0 0 10px rgba(15, 23, 42, 0.9);
         }
 
         .detail-row span:first-child {
-            font-weight: bold;
-            text-shadow: 0 0 5px #00ff41;
+            font-weight: 600;
+            text-shadow: none;
         }
 
         .info-message {
-            background: rgba(0, 255, 65, 0.1);
-            border: 1px solid #00ff41;
+            background: rgba(15, 23, 42, 0.98);
+            border: 1px solid rgba(148, 163, 184, 0.7);
             border-radius: 5px;
             padding: 1rem;
             margin: 2rem 0;
-            color: #00ff41;
+            color: #e6f7ee;
         }
 
         .btn {
             display: inline-block;
             padding: 1rem 2rem;
-            background: rgba(0, 255, 65, 0.1);
-            border: 2px solid #00ff41;
-            border-radius: 5px;
-            color: #00ff41;
+            background: linear-gradient(135deg, #0b1120, #020617);
+            border: 1px solid rgba(100, 240, 163, 0.7);
+            border-radius: 6px;
+            color: #e6f7ee;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
@@ -188,9 +196,9 @@
         }
 
         .btn:hover {
-            background: rgba(0, 255, 65, 0.2);
-            box-shadow: 0 0 30px rgba(0, 255, 65, 0.5);
-            transform: scale(1.05);
+            background: linear-gradient(135deg, #111827, #020617);
+            box-shadow: 0 22px 40px rgba(15, 23, 42, 0.9);
+            transform: scale(1.03);
         }
 
         @media screen and (max-width: 768px) {
@@ -285,8 +293,16 @@
         <div class="container">
             <div class="success-card">
                 <div class="success-icon">✓</div>
-                <h1 class="success-title">ОПЛАТА УСПЕШНА</h1>
-                <p class="success-message">Ваш заказ успешно оплачен. Чек отправлен на email.</p>
+                @if($order->payment_status === 'paid')
+                    <h1 class="success-title">ОПЛАТА УСПЕШНА</h1>
+                    <p class="success-message">Ваш заказ оплачен. Мы отправим чек и билет на email.</p>
+                @elseif($order->payment_status === 'cancelled')
+                    <h1 class="success-title">ОПЛАТА ОТМЕНЕНА</h1>
+                    <p class="success-message">Платёж не был завершён. Вы можете оформить заказ заново.</p>
+                @else
+                    <h1 class="success-title">ОПЛАТА В ПРОЦЕССЕ</h1>
+                    <p class="success-message">Мы проверяем оплату. Обычно это занимает до пары минут.</p>
+                @endif
 
                 <div class="order-details">
                     <div class="detail-row">
@@ -314,10 +330,18 @@
                 </div>
 
                 <div class="info-message">
-                    <p>Чек об оплате и билет отправлены на email: <strong>{{ $order->customer->email }}</strong></p>
+                    <p>Email: <strong>{{ $order->customer->email }}</strong></p>
                     <p style="margin-top: 0.5rem; font-size: 0.875rem; opacity: 0.8;">Проверьте папку "Входящие" или "Спам"</p>
-                    @if($order->receipt_sent && $order->ticket_sent)
-                    <p style="margin-top: 0.5rem; color: #00ff41; font-weight: bold;">✓ Чек и билет успешно отправлены</p>
+                    @if($order->payment_status === 'paid')
+                        @if($order->receipt_sent && $order->ticket_sent)
+                            <p style="margin-top: 0.5rem; color: #00ff41; font-weight: bold;">✓ Чек и билет отправлены</p>
+                        @else
+                            <p style="margin-top: 0.5rem;">Отправляем чек и билет…</p>
+                        @endif
+                    @elseif($order->payment_status === 'cancelled')
+                        <p style="margin-top: 0.5rem;">Если вы хотите купить билет — оформите заказ заново.</p>
+                    @else
+                        <p style="margin-top: 0.5rem;">Если письма не будет в течение 5 минут — попробуйте обновить страницу.</p>
                     @endif
                 </div>
 

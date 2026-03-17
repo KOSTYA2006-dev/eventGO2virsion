@@ -18,8 +18,8 @@
         }
 
         body {
-            background: #000;
-            color: #00ff41;
+            background: #050b10;
+            color: #e6f7ee;
             font-family: 'Ubuntu', monospace;
             min-height: 100vh;
             position: relative;
@@ -52,9 +52,9 @@
         }
 
         header {
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(5, 11, 16, 0.9);
             backdrop-filter: blur(10px);
-            border-bottom: 2px solid #00ff41;
+            border-bottom: 1px solid rgba(12, 148, 136, 0.5);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -98,8 +98,8 @@
         .logo {
             font-size: 2rem;
             font-weight: bold;
-            color: #00ff41;
-            text-shadow: 0 0 10px #00ff41;
+            color: #64f0a3;
+            text-shadow: 0 0 8px rgba(100, 240, 163, 0.8);
             letter-spacing: 3px;
             text-decoration: none;
         }
@@ -130,20 +130,20 @@
         }
 
         .page-title {
-            font-size: 2.5rem;
-            font-weight: bold;
+            font-size: 2.3rem;
+            font-weight: 700;
             text-align: center;
             margin-bottom: 2rem;
-            color: #00ff41;
-            text-shadow: 0 0 10px #00ff41;
+            color: #e6f7ee;
+            text-shadow: 0 0 10px rgba(15, 23, 42, 0.9);
         }
 
         .content-card {
-            background: rgba(0, 0, 0, 0.9);
-            border: 2px solid #00ff41;
-            border-radius: 10px;
+            background: radial-gradient(circle at top, #0b1120, #020617);
+            border: 1px solid rgba(12, 148, 136, 0.5);
+            border-radius: 12px;
             padding: 2rem;
-            box-shadow: 0 0 30px rgba(0, 255, 65, 0.3);
+            box-shadow: 0 24px 55px rgba(15, 23, 42, 0.9);
         }
 
         .contact-section {
@@ -153,15 +153,15 @@
         .contact-section h2 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: #00ff41;
-            text-shadow: 0 0 5px #00ff41;
+            color: #e6f7ee;
+            text-shadow: none;
         }
 
         .contact-item {
             display: flex;
             align-items: center;
             padding: 1rem 0;
-            border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+            border-bottom: 1px solid rgba(30, 64, 175, 0.45);
         }
 
         .contact-item:last-child {
@@ -180,29 +180,29 @@
         }
 
         .contact-label {
-            font-weight: bold;
-            color: #00ff41;
+            font-weight: 600;
+            color: #cbd5f5;
             margin-bottom: 0.25rem;
         }
 
         .contact-value {
-            color: rgba(0, 255, 65, 0.9);
+            color: #e6f7ee;
         }
 
         .contact-value a {
-            color: rgba(0, 255, 65, 0.9);
+            color: #64f0a3;
             text-decoration: none;
             transition: all 0.3s;
         }
 
         .contact-value a:hover {
-            text-shadow: 0 0 10px #00ff41;
+            text-shadow: 0 0 10px rgba(100, 240, 163, 0.6);
         }
 
         footer {
-            background: rgba(0, 0, 0, 0.8);
-            border-top: 2px solid #00ff41;
-            color: #00ff41;
+            background: rgba(5, 11, 16, 0.9);
+            border-top: 1px solid rgba(12, 148, 136, 0.5);
+            color: #e6f7ee;
             padding: 2rem 0;
             margin-top: auto;
         }
@@ -223,30 +223,30 @@
         }
 
         .footer-links a {
-            color: #00ff41;
+            color: #64f0a3;
             text-decoration: none;
             transition: all 0.3s;
         }
 
         .footer-links a:hover {
-            text-shadow: 0 0 10px #00ff41;
+            text-shadow: 0 0 10px rgba(100, 240, 163, 0.6);
         }
 
         .btn-back {
             display: inline-block;
             padding: 0.75rem 1.5rem;
-            background: rgba(0, 255, 65, 0.1);
-            border: 2px solid #00ff41;
-            border-radius: 5px;
-            color: #00ff41;
+            background: linear-gradient(135deg, #0b1120, #020617);
+            border: 1px solid rgba(100, 240, 163, 0.7);
+            border-radius: 6px;
+            color: #e6f7ee;
             text-decoration: none;
             margin-top: 2rem;
             transition: all 0.3s;
         }
 
         .btn-back:hover {
-            background: rgba(0, 255, 65, 0.2);
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+            background: linear-gradient(135deg, #111827, #020617);
+            box-shadow: 0 22px 40px rgba(15, 23, 42, 0.9);
         }
 
         @media screen and (max-width: 1200px) {
@@ -398,8 +398,8 @@
                         <div class="contact-info">
                             <div class="contact-label">Телефон</div>
                             <div class="contact-value">
-                                <a href="tel:{{ config('app.contact_phone', '+79991234567') }}">
-                                    {{ config('app.contact_phone', '+7 (999) 123-45-67') }}
+                                <a href="tel:{{ config('app.contact_phone', '89094368010') }}">
+                                    {{ config('app.contact_phone', '89094368010') }}
                                 </a>
                             </div>
                         </div>

@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
         Admin::create([
             'name' => 'Администратор',
             'email' => 'admin@eventgo.ru',
-            'password' => Hash::make('admin123'),
+            // ВАЖНО: передаём сюда обычный пароль, он захешируется автоматически через cast
+            'password' => 'admin123',
         ]);
 
         // Создание билетов (250 обычных, 50 VIP по ТЗ)
@@ -41,7 +42,6 @@ class DatabaseSeeder extends Seeder
             'is_active' => true,
         ]);
 
-        // Создание промокодов 10%, 20%, 30% по ТЗ
         PromoCode::create([
             'code' => 'SALE10',
             'discount_type' => 'percentage',
