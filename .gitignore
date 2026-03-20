@@ -1,7 +1,6 @@
 .env
 /vendor/
 /node_modules/
-composer.phar
 .phpunit.result.cache
 /storage/*.key
 /storage/framework/cache/*
