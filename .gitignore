@@ -9,3 +9,8 @@
 /storage/logs/*
 /.idea/
 /.vscode/
+*.docx
+~$*
+/presentation_assets/
+/presentation_kp7145hg.pptx
+/scripts/

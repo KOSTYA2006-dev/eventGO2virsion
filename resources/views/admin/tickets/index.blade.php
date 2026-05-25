@@ -44,9 +44,9 @@
                         <a href="{{ route('admin.promo_codes.index') }}" class="nav-link">Промокоды</a>
                     </li>
                     <li class="nav-item">
-                        <form action="{{ route('admin.logout') }}" method="POST" style="margin: 0;">
+                        <form action="{{ route('admin.logout') }}" method="POST" class="admin-nav-logout-form">
                             @csrf
-                            <button type="submit" class="nav-link" style="background: none; border: none; cursor: pointer;">Выход</button>
+                            <button type="submit" class="nav-link admin-nav-logout-btn">Выход</button>
                         </form>
                     </li>
                 </ul>
@@ -56,6 +56,22 @@
                 <div class="header">
                     <h1 class="page-title">Билеты</h1>
                 </div>
+
+                @if(session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
+                @if($errors->any())
+                    <div class="alert alert-error">
+                        <ul>
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
                 <div class="table-container">
                     <table>
@@ -68,6 +84,7 @@
                                 <th>Продано</th>
                                 <th>Статус</th>
                                 <th>Дата создания</th>
+                                <th>Действия</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -88,10 +105,26 @@
                                         </span>
                                     </td>
                                     <td>{{ $ticket->created_at->format('d.m.Y H:i') }}</td>
+                                    <td>
+                                        <form action="{{ route('admin.tickets.update-price', $ticket) }}" method="POST" class="admin-form-inline">
+                                            @csrf
+                                            @method('PATCH')
+                                            <input
+                                                type="number"
+                                                name="price"
+                                                class="admin-input-narrow"
+                                                value="{{ number_format((float) $ticket->price, 2, '.', '') }}"
+                                                min="0"
+                                                step="0.01"
+                                                required
+                                            >
+                                            <button type="submit" class="btn btn-small">Сохранить</button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7" style="text-align: center; padding: 2rem;">Билеты не найдены</td>
+                                    <td colspan="8" class="admin-table-empty">Билеты не найдены</td>
                                 </tr>
                             @endforelse
                         </tbody>

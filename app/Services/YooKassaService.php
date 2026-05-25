@@ -4,15 +4,29 @@ namespace App\Services;
 
 use App\Models\Order;
 use YooKassa\Client;
-use YooKassa\Model\Notification\NotificationSucceeded;
-use YooKassa\Model\Notification\NotificationCanceled;
-use YooKassa\Model\NotificationEventType;
-use YooKassa\Model\PaymentStatus;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class YooKassaService
 {
     private $client;
+
+    private function normalizePhone(?string $phone): ?string
+    {
+        $digits = preg_replace('/\D+/', '', (string) $phone);
+        if ($digits === '') {
+            return null;
+        }
+
+        if (strlen($digits) === 11 && $digits[0] === '8') {
+            return '+7' . substr($digits, 1);
+        }
+        if (strlen($digits) === 11 && $digits[0] === '7') {
+            return '+7' . substr($digits, 1);
+        }
+
+        return '+' . $digits;
+    }
 
     public function __construct()
     {
@@ -27,16 +41,35 @@ class YooKassaService
         $this->client->setAuth($shopId, $secretKey);
     }
 
-    /**
-     * Создание платежа в ЮKassa
-     */
     public function createPayment(Order $order, $returnUrl = null)
     {
         try {
+            $amount = (float) $order->total_amount;
+            if ($amount <= 0) {
+                throw new \InvalidArgumentException('Сумма платежа должна быть больше 0');
+            }
+
+            $order->loadMissing(['customer', 'ticket']);
+
+            $customerEmail = $order->customer?->email ?: null;
+            $customerPhone = $this->normalizePhone($order->customer?->phone);
+            if (!$customerEmail && !$customerPhone) {
+                throw new \InvalidArgumentException('Для чека нужен email или телефон покупателя');
+            }
+
+            $taxSystemCode = (int) config('payment.yookassa.tax_system_code', 2);
+            $vatCode = (int) config('payment.yookassa.vat_code', 1);
+            $paymentSubject = (string) config('payment.yookassa.payment_subject', 'service');
+            $paymentMode = (string) config('payment.yookassa.payment_mode', 'full_payment');
+
+            $description = $order->ticket?->name
+                ? ("Билет: " . $order->ticket->name)
+                : ("Заказ №{$order->order_number}");
+
             $payment = $this->client->createPayment(
                 [
                     'amount' => [
-                        'value' => number_format($order->total_amount, 2, '.', ''),
+                        'value' => number_format($amount, 2, '.', ''),
                         'currency' => 'RUB',
                     ],
                     'confirmation' => [
@@ -45,29 +78,51 @@ class YooKassaService
                     ],
                     'capture' => true,
                     'description' => "Оплата заказа №{$order->order_number}",
+                    'receipt' => [
+                        'customer' => array_filter([
+                            'email' => $customerEmail,
+                            'phone' => $customerPhone,
+                        ], fn ($v) => !empty($v)),
+                        'tax_system_code' => $taxSystemCode,
+                        'items' => [
+                            [
+                                'description' => $description,
+                                'quantity' => '1.00',
+                                'amount' => [
+                                    'value' => number_format($amount, 2, '.', ''),
+                                    'currency' => 'RUB',
+                                ],
+                                'vat_code' => $vatCode,
+                                'payment_subject' => $paymentSubject,
+                                'payment_mode' => $paymentMode,
+                            ],
+                        ],
+                    ],
                     'metadata' => [
                         'order_id' => $order->id,
                         'order_number' => $order->order_number,
                     ],
                 ],
-                uniqid('', true)
+                (string) Str::uuid()
             );
 
-            // Сохраняем payment_id в заказ
             $order->update([
                 'payment_id' => $payment->getId(),
             ]);
 
             return $payment;
         } catch (\Exception $e) {
-            Log::error('Ошибка создания платежа ЮKassa: ' . $e->getMessage());
+            Log::error('Ошибка создания платежа ЮKassa: ' . $e->getMessage(), [
+                'order_id' => $order->id,
+                'order_number' => $order->order_number,
+                'total_amount' => (string) $order->total_amount,
+                'return_url' => $returnUrl,
+                'exception' => $e,
+            ]);
             throw $e;
         }
     }
 
-    /**
-     * Получение информации о платеже
-     */
     public function getPaymentInfo($paymentId)
     {
         try {
@@ -78,14 +133,11 @@ class YooKassaService
         }
     }
 
-    /**
-     * Обработка webhook от ЮKassa
-     */
     public function handleWebhook($requestBody)
     {
         try {
             $notification = json_decode($requestBody, true);
-            
+
             if (!isset($notification['event'])) {
                 Log::warning('Webhook без event: ' . $requestBody);
                 return null;
@@ -103,7 +155,6 @@ class YooKassaService
             $status = $payment['status'] ?? null;
             $metadata = $payment['metadata'] ?? [];
 
-            // Находим заказ по payment_id или order_number
             $order = null;
             if (isset($metadata['order_id'])) {
                 $order = Order::find($metadata['order_id']);
@@ -118,17 +169,16 @@ class YooKassaService
                 return null;
             }
 
-            // Обрабатываем события
-            if ($event === NotificationEventType::PAYMENT_SUCCEEDED) {
-                if ($status === PaymentStatus::SUCCEEDED && $order->payment_status !== 'paid') {
+            if ($event === 'payment.succeeded') {
+                if ($status === 'succeeded' && $order->payment_status !== 'paid') {
                     return [
                         'order' => $order,
                         'status' => 'paid',
                         'payment_id' => $paymentId,
                     ];
                 }
-            } elseif ($event === NotificationEventType::PAYMENT_CANCELED) {
-                if ($status === PaymentStatus::CANCELED) {
+            } elseif ($event === 'payment.canceled') {
+                if ($status === 'canceled') {
                     return [
                         'order' => $order,
                         'status' => 'cancelled',
@@ -144,10 +194,3 @@ class YooKassaService
         }
     }
 }
-
-
-
-
-
-
-

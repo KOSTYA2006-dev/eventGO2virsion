@@ -44,9 +44,9 @@
                         <a href="{{ route('admin.promo_codes.index') }}" class="nav-link">Промокоды</a>
                     </li>
                     <li class="nav-item">
-                        <form action="{{ route('admin.logout') }}" method="POST" style="margin: 0;">
+                        <form action="{{ route('admin.logout') }}" method="POST" class="admin-nav-logout-form">
                             @csrf
-                            <button type="submit" class="nav-link" style="background: none; border: none; cursor: pointer;">Выход</button>
+                            <button type="submit" class="nav-link admin-nav-logout-btn">Выход</button>
                         </form>
                     </li>
                 </ul>
@@ -116,12 +116,12 @@
                     </div>
                     <div class="info-row">
                         <span class="info-label">Скидка:</span>
-                        <span class="info-value" style="color: #bbf7d0;">-{{ number_format($order->discount_amount, 2, '.', ' ') }} ₽</span>
+                        <span class="info-value admin-info-value-discount">-{{ number_format($order->discount_amount, 2, '.', ' ') }} ₽</span>
                     </div>
                     @endif
                     <div class="info-row">
                         <span class="info-label">Итого:</span>
-                        <span class="info-value"><strong style="font-size: 1.25rem;">{{ $order->formatted_total_amount }}</strong></span>
+                        <span class="info-value"><strong class="admin-total-strong">{{ $order->formatted_total_amount }}</strong></span>
                     </div>
                     @if($order->payment_status === 'paid')
                     <div class="info-row">
@@ -188,27 +188,27 @@
                 </div>
 
                 @if($order->payment_status === 'pending')
-                <div class="info-card" style="border-left: 3px solid #facc15;">
+                <div class="info-card admin-info-card-warn">
                     <h3>Действия</h3>
-                    <p style="margin-bottom: 1rem;">После подтверждения оплаты чек и билет будут автоматически отправлены на email покупателя: <strong>{{ $order->customer->email }}</strong></p>
+                    <p class="admin-p-mb">После подтверждения оплаты чек и билет будут автоматически отправлены на email покупателя: <strong>{{ $order->customer->email }}</strong></p>
                     
-                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                        <form action="{{ route('admin.orders.verify-payment', $order->id) }}" method="POST" style="display: inline-block;">
+                    <div class="admin-flex-gap">
+                        <form action="{{ route('admin.orders.verify-payment', $order->id) }}" method="POST" class="admin-form-inline">
                             @csrf
-                            <button type="submit" class="btn btn-success" onclick="return confirm('Подтвердить оплату заказа №{{ $order->order_number }}? Чек и билет будут отправлены на email покупателя.')">
+                            <button type="submit" class="btn btn-success" data-confirm="Подтвердить оплату заказа №{{ $order->order_number }}? Чек и билет будут отправлены на email покупателя.">
                                 Подтвердить оплату и отправить чек и билет
                             </button>
                         </form>
                         
                         @if(abs($order->total_amount - 10.00) < 0.01)
-                        <form action="{{ route('admin.orders.test-check', $order->id) }}" method="POST" style="display: inline-block;">
+                        <form action="{{ route('admin.orders.test-check', $order->id) }}" method="POST" class="admin-form-inline">
                             @csrf
-                            <button type="submit" class="btn btn-primary" onclick="return confirm('Выполнить тестовую проверку оплаты для заказа на 10 рублей? Чек будет отправлен на email покупателя.')">
+                            <button type="submit" class="btn btn-primary" data-confirm="Выполнить тестовую проверку оплаты для заказа на 10 рублей? Чек будет отправлен на email покупателя.">
                                 🧪 Тестовая проверка (10₽)
                             </button>
                         </form>
                         @else
-                        <button type="button" class="btn" style="opacity: 0.6; cursor: not-allowed;" disabled title="Тестовая проверка доступна только для заказов на сумму 10 рублей">
+                        <button type="button" class="btn admin-btn-disabled-muted" disabled title="Тестовая проверка доступна только для заказов на сумму 10 рублей">
                             🧪 Тестовая проверка (10₽) - недоступно
                         </button>
                         @endif
@@ -221,6 +221,7 @@
 
     <script src="{{ asset('assets/js/backgraund.js') }}" defer></script>
     <script src="{{ asset('assets/js/matrix.js') }}" defer></script>
+    <script src="{{ asset('assets/js/admin-confirm.js') }}" defer></script>
 </body>
 </html>
 

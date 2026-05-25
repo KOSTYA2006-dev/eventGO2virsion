@@ -44,9 +44,9 @@
                         <a href="{{ route('admin.promo_codes.index') }}" class="nav-link active">Промокоды</a>
                     </li>
                     <li class="nav-item">
-                        <form action="{{ route('admin.logout') }}" method="POST" style="margin: 0;">
+                        <form action="{{ route('admin.logout') }}" method="POST" class="admin-nav-logout-form">
                             @csrf
-                            <button type="submit" class="nav-link" style="background: none; border: none; cursor: pointer;">Выход</button>
+                            <button type="submit" class="nav-link admin-nav-logout-btn">Выход</button>
                         </form>
                     </li>
                 </ul>
@@ -135,7 +135,7 @@
                         <tbody>
                             @forelse($promoCodes as $promoCode)
                                 <tr>
-                                    <td><strong style="font-family: monospace; font-size: 1.1rem;">{{ $promoCode->code }}</strong></td>
+                                    <td><strong class="admin-mono-code">{{ $promoCode->code }}</strong></td>
                                     <td>
                                         <span class="badge badge-{{ $promoCode->discount_type === 'percentage' ? 'percentage' : 'fixed' }}">
                                             {{ $promoCode->discount_type === 'percentage' ? 'Процент' : 'Фиксированная' }}
@@ -157,25 +157,25 @@
                                     </td>
                                     <td><strong>{{ $promoCode->orders_count }}</strong></td>
                                     <td>
-                                        <form action="{{ route('admin.promo_codes.toggle', $promoCode) }}" method="POST" style="display:inline-block; margin-right: .5rem;">
+                                        <form action="{{ route('admin.promo_codes.toggle', $promoCode) }}" method="POST" class="admin-form-inline-mr">
                                             @csrf
                                             @method('PATCH')
                                             <button type="submit" class="btn btn-small">
                                                 {{ $promoCode->is_active ? 'Заблокировать' : 'Разблокировать' }}
                                             </button>
                                         </form>
-                                        <form action="{{ route('admin.promo_codes.update', $promoCode) }}" method="POST" style="display:inline-block;">
+                                        <form action="{{ route('admin.promo_codes.update', $promoCode) }}" method="POST" class="admin-form-inline">
                                             @csrf
                                             @method('PATCH')
-                                            <input type="number" name="discount_value" value="{{ $promoCode->discount_value }}" step="0.01" min="0" style="width: 90px; font-size: 0.75rem;">
-                                            <input type="number" name="max_uses" value="{{ $promoCode->max_uses }}" min="1" placeholder="∞" style="width: 70px; font-size: 0.75rem;">
+                                            <input type="number" name="discount_value" class="admin-input-narrow" value="{{ $promoCode->discount_value }}" step="0.01" min="0">
+                                            <input type="number" name="max_uses" class="admin-input-narrow-sm" value="{{ $promoCode->max_uses }}" min="1" placeholder="∞">
                                             <button type="submit" class="btn btn-small">Обновить</button>
                                         </form>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="10" style="text-align: center; padding: 2rem;">Промокоды не найдены</td>
+                                    <td colspan="10" class="admin-table-empty">Промокоды не найдены</td>
                                 </tr>
                             @endforelse
                         </tbody>

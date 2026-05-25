@@ -1,15 +1,26 @@
-
 var menu = document.getElementById('mobileMenu');
-var logo = document.getElementById('header-logo');
-var logo2 = document.getElementById('header-logo2');
-// ______________
 
 function closeToggleMenu() {
-    menu.style.right = "-1000px";
+    if (menu) {
+        menu.style.right = '-1000px';
+    }
 }
 
 function toggleMenu() {
-    menu.style.display = "block";
-    menu.style.right = "0";
+    if (menu) {
+        menu.style.display = 'block';
+        menu.style.right = '0';
+    }
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+    var openBtn = document.querySelector('[data-menu-open]');
+    var closeBtn = document.querySelector('[data-menu-close]');
+
+    if (openBtn) {
+        openBtn.addEventListener('click', toggleMenu);
+    }
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeToggleMenu);
+    }
+});

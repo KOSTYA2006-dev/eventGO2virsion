@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreignId('promo_code_id')->nullable()->constrained('promo_codes')->onDelete('set null'); // Промокод
             $table->decimal('discount_amount', 10, 2)->default(0); // Сумма скидки
             $table->decimal('total_amount', 10, 2); // Итоговая сумма
-            $table->enum('payment_method', ['qr', 'sbp']); // Способ оплаты
+            $table->string('payment_method', 32)->default('yookassa'); // ЮKassa
             $table->enum('payment_status', ['pending', 'paid', 'failed', 'cancelled'])->default('pending'); // Статус оплаты
             $table->string('payment_receipt_path')->nullable(); // Путь к чеку
             $table->boolean('receipt_sent')->default(false); // Отправлен ли чек

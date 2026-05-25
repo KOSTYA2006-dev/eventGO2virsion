@@ -100,27 +100,12 @@
                             @enderror
                         </div>
 
-                        <div class="form-group">
-                            <label>Способ оплаты *</label>
-                            <div class="payment-method-group">
-                                <div class="payment-method-option">
-                                    <input type="radio" id="payment_qr" name="payment_method" value="qr" {{ old('payment_method', 'qr') === 'qr' ? 'checked' : '' }} required>
-                                    <label for="payment_qr">QR код</label>
-                                </div>
-                                <div class="payment-method-option">
-                                    <input type="radio" id="payment_sbp" name="payment_method" value="sbp" {{ old('payment_method') === 'sbp' ? 'checked' : '' }} required>
-                                    <label for="payment_sbp">СБП</label>
-                                </div>
-                            </div>
-                            @error('payment_method')
-                                <div class="error-message">{{ $message }}</div>
-                            @enderror
-                        </div>
+                        <p class="payment-yookassa-note">Оплата — через платёжную систему <strong>ЮKassa</strong> после оформления заказа.</p>
 
                         <div class="checkbox-group">
                             <input type="checkbox" id="personal_data_agreement" name="personal_data_agreement" value="1" {{ old('personal_data_agreement') ? 'checked' : '' }} required>
                             <label for="personal_data_agreement">
-                                Я согласен(а) на обработку персональных данных *
+                                Я ознакомлен(а) с <a href="{{ route('pages.agreement') }}" target="_blank" rel="noopener noreferrer" class="agreement-inline-link">пользовательским соглашением и политикой обработки персональных данных</a> и даю согласие на обработку моих персональных данных *
                             </label>
                         </div>
                         @error('personal_data_agreement')
@@ -128,9 +113,9 @@
                         @enderror
 
                         @if($errors->any())
-                            <div class="error-message" style="margin-bottom: 1rem; padding: 1rem; border: 1px solid #ff0000; border-radius: 5px; background: rgba(255, 0, 0, 0.1);">
+                            <div class="form-errors-summary error-message">
                                 <strong>Ошибки при заполнении формы:</strong>
-                                <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                                <ul class="form-errors-summary-list">
                                     @foreach($errors->all() as $error)
                                         <li>{{ $error }}</li>
                                     @endforeach

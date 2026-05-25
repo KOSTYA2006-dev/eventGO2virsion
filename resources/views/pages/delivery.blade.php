@@ -5,340 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Доставка и получение - EventGo</title>
     <link rel="stylesheet" href="{{ asset('assets/css/main-set.css') }}">
-    <style>
-        @font-face {
-            font-family: 'Ubuntu';
-            src: url('{{ asset("assets/text-style/Ubuntu/Ubuntu-Regular.ttf") }}') format('truetype');
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: #050b10;
-            color: #e6f7ee;
-            font-family: 'Ubuntu', monospace;
-            min-height: 100vh;
-            position: relative;
-        }
-
-        canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1;
-            display: block;
-        }
-
-        #matrix-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .content-wrapper {
-            position: relative;
-            z-index: 10;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        header {
-            background: rgba(5, 11, 16, 0.9);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(12, 148, 136, 0.5);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 0;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding-left: 40px;
-            padding-right: 40px;
-            gap: 20px;
-        }
-
-        @media screen and (max-width: 1200px) {
-            nav {
-                padding-left: 30px;
-                padding-right: 30px;
-            }
-        }
-
-        @media screen and (max-width: 768px) {
-            nav {
-                padding: 1rem 0;
-                padding-left: 20px;
-                padding-right: 20px;
-            }
-        }
-
-        @media screen and (max-width: 480px) {
-            nav {
-                padding: 0.8rem 0;
-                padding-left: 15px;
-                padding-right: 15px;
-            }
-        }
-
-        .logo {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #64f0a3;
-            text-shadow: 0 0 8px rgba(100, 240, 163, 0.8);
-            letter-spacing: 3px;
-            text-decoration: none;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 2rem 40px;
-            flex: 1;
-        }
-
-        @media screen and (max-width: 1200px) {
-            .container {
-                padding: 2rem 30px;
-            }
-        }
-
-        @media screen and (max-width: 768px) {
-            .container {
-                padding: 1.5rem 20px;
-            }
-        }
-
-        @media screen and (max-width: 480px) {
-            .container {
-                padding: 1rem 15px;
-            }
-        }
-
-        .page-title {
-            font-size: 2.3rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 2rem;
-            color: #e6f7ee;
-            text-shadow: 0 0 10px rgba(15, 23, 42, 0.9);
-        }
-
-        .content-card {
-            background: radial-gradient(circle at top, #0b1120, #020617);
-            border: 1px solid rgba(12, 148, 136, 0.5);
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 24px 55px rgba(15, 23, 42, 0.9);
-            line-height: 1.8;
-        }
-
-        .content-card h2 {
-            font-size: 1.5rem;
-            margin: 2rem 0 1rem 0;
-            color: #e6f7ee;
-            text-shadow: none;
-        }
-
-        .content-card h2:first-child {
-            margin-top: 0;
-        }
-
-        .content-card p {
-            margin-bottom: 1rem;
-            color: #cbd5f5;
-        }
-
-        .content-card ul {
-            margin-left: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .content-card li {
-            margin-bottom: 0.5rem;
-            color: #e6f7ee;
-        }
-
-        .highlight-box {
-            background: rgba(15, 23, 42, 0.95);
-            border: 1px solid rgba(12, 148, 136, 0.5);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-        }
-
-        footer {
-            background: rgba(5, 11, 16, 0.9);
-            border-top: 1px solid rgba(12, 148, 136, 0.5);
-            color: #e6f7ee;
-            padding: 2rem 0;
-            margin-top: auto;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            text-align: center;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            margin-bottom: 1rem;
-        }
-
-        .footer-links a {
-            color: #64f0a3;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-
-        .footer-links a:hover {
-            text-shadow: 0 0 10px rgba(100, 240, 163, 0.6);
-        }
-
-        .btn-back {
-            display: inline-block;
-            padding: 0.75rem 1.5rem;
-            background: linear-gradient(135deg, #0b1120, #020617);
-            border: 1px solid rgba(100, 240, 163, 0.7);
-            border-radius: 6px;
-            color: #e6f7ee;
-            text-decoration: none;
-            margin-top: 2rem;
-            transition: all 0.3s;
-        }
-
-        .btn-back:hover {
-            background: linear-gradient(135deg, #111827, #020617);
-            box-shadow: 0 22px 40px rgba(15, 23, 42, 0.9);
-        }
-
-        @media screen and (max-width: 1200px) {
-            .logo {
-                font-size: 1.75rem;
-            }
-        }
-
-        @media screen and (max-width: 768px) {
-            .logo {
-                font-size: 1.5rem;
-                letter-spacing: 2px;
-            }
-
-            .page-title {
-                font-size: 2rem;
-            }
-
-            .content-card {
-                padding: 1.5rem;
-            }
-
-            .content-card h2 {
-                font-size: 1.25rem;
-            }
-
-            .content-card p {
-                font-size: 0.95rem;
-            }
-
-            .content-card ul {
-                margin-left: 1.5rem;
-            }
-
-            .content-card li {
-                font-size: 0.95rem;
-            }
-
-            .highlight-box {
-                padding: 1.25rem;
-            }
-
-            .footer-content {
-                padding: 0 20px;
-            }
-
-            .footer-links {
-                gap: 1rem;
-            }
-
-            .btn-back {
-                padding: 0.625rem 1.25rem;
-                font-size: 0.9rem;
-            }
-        }
-
-        @media screen and (max-width: 480px) {
-            .logo {
-                font-size: 1.25rem;
-                letter-spacing: 1px;
-            }
-
-            .page-title {
-                font-size: 1.5rem;
-            }
-
-            .content-card {
-                padding: 1.25rem;
-            }
-
-            .content-card h2 {
-                font-size: 1.1rem;
-                margin: 1.5rem 0 0.75rem 0;
-            }
-
-            .content-card p {
-                font-size: 0.9rem;
-            }
-
-            .content-card ul {
-                margin-left: 1.25rem;
-            }
-
-            .content-card li {
-                font-size: 0.9rem;
-            }
-
-            .highlight-box {
-                padding: 1rem;
-            }
-
-            footer {
-                padding: 1.5rem 0;
-            }
-
-            .footer-content {
-                padding: 0 15px;
-            }
-
-            .footer-links {
-                gap: 0.75rem;
-                font-size: 0.85rem;
-            }
-
-            .btn-back {
-                padding: 0.5rem 1rem;
-                font-size: 0.85rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('assets/css/eventgo-static-pages.css') }}">
 </head>
 <body>
     <canvas id="c"></canvas>
@@ -348,7 +15,25 @@
         <header>
             <nav>
                 <a href="{{ route('index') }}" class="logo">EVENTGO</a>
-                <a href="{{ route('index') }}" style="color: #00ff41; text-decoration: none;">ГЛАВНАЯ</a>
+                <a href="{{ route('index') }}" class="nav-home-link">ГЛАВНАЯ</a>
+                <div class="header-socials" aria-label="Социальные сети">
+                    <a class="social-link social-link--tg" href="https://t.me/podolog_rostov_sila" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+                        <span class="social-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" class="social-svg">
+                                <path d="M9.04 15.47 8.8 18.9c.36 0 .52-.16.71-.35l1.7-1.63 3.53 2.58c.65.36 1.1.17 1.27-.6l2.3-10.78c.2-.94-.34-1.31-.98-1.07L4.7 10.07c-.92.36-.9.88-.16 1.1l3.43 1.07 7.96-5.02c.38-.23.72-.1.44.13l-6.47 5.86Z"/>
+                            </svg>
+                        </span>
+                        <span class="social-text">Telegram</span>
+                    </a>
+                    <a class="social-link social-link--vk" href="https://vk.ru/studia_sila" target="_blank" rel="noopener noreferrer" aria-label="ВКонтакте">
+                        <span class="social-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" class="social-svg">
+                                <path d="M12.96 16.83c-3.7 0-5.81-2.54-5.9-6.77h1.85c.06 3.11 1.43 4.43 2.51 4.7V10.06h1.74v2.68c1.06-.11 2.17-1.34 2.55-2.68h1.74c-.29 1.66-1.49 2.89-2.34 3.4.85.41 2.2 1.49 2.72 3.37h-1.92c-.41-1.29-1.44-2.29-2.75-2.43v2.43h-.2Z"/>
+                            </svg>
+                        </span>
+                        <span class="social-text">ВК</span>
+                    </a>
+                </div>
             </nav>
         </header>
 
@@ -357,7 +42,7 @@
 
             <div class="content-card">
                 <div class="highlight-box">
-                    <p style="font-weight: bold; font-size: 1.1rem; margin-bottom: 0.5rem;">
+                    <p class="static-lead">
                         📧 Электронная доставка билетов
                     </p>
                     <p>
@@ -392,7 +77,7 @@
 
                 <h2>Важная информация</h2>
                 <div class="highlight-box">
-                    <ul style="margin-left: 0;">
+                    <ul class="static-list-unindented">
                         <li>Билет является именным и не подлежит передаче третьим лицам</li>
                         <li>При входе на мероприятие необходимо предъявить документ, удостоверяющий личность</li>
                         <li>Билет действителен только на указанную дату и время мероприятия</li>
@@ -423,7 +108,7 @@
                     <a href="{{ route('pages.contacts') }}">Контакты</a>
                 </div>
                 <p>&copy; {{ date('Y') }} EventGo. Все права защищены.</p>
-                <p style="margin-top: 0.5rem; font-size: 0.875rem; opacity: 0.8;">
+                <p class="static-footer-note">
                     ИНН: {{ config('payment.vtb_inn', '616404172802') }} | 
                     ОГРНИП: {{ config('payment.ogrnip', '316616400101234') }}
                 </p>

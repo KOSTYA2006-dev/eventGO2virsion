@@ -44,9 +44,9 @@
                         <a href="{{ route('admin.promo_codes.index') }}" class="nav-link">Промокоды</a>
                     </li>
                     <li class="nav-item">
-                        <form action="{{ route('admin.logout') }}" method="POST" style="margin: 0;">
+                        <form action="{{ route('admin.logout') }}" method="POST" class="admin-nav-logout-form">
                             @csrf
-                            <button type="submit" class="nav-link" style="background: none; border: none; cursor: pointer;">Выход</button>
+                            <button type="submit" class="nav-link admin-nav-logout-btn">Выход</button>
                         </form>
                     </li>
                 </ul>
@@ -139,14 +139,14 @@
                                     <td>
                                         <a href="{{ route('admin.orders.show', $order->id) }}" class="btn btn-primary">Просмотр</a>
                                         @if($order->payment_status === 'pending')
-                                            <form action="{{ route('admin.orders.verify-payment', $order->id) }}" method="POST" style="display: inline-block; margin-top: 0.5rem;">
+                                            <form action="{{ route('admin.orders.verify-payment', $order->id) }}" method="POST" class="admin-form-inline-mt">
                                                 @csrf
-                                                <button type="submit" class="btn btn-success" onclick="return confirm('Подтвердить оплату заказа №{{ $order->order_number }}? Чек и билет будут отправлены на email покупателя.')">Подтвердить оплату</button>
+                                                <button type="submit" class="btn btn-success" data-confirm="Подтвердить оплату заказа №{{ $order->order_number }}? Чек и билет будут отправлены на email покупателя.">Подтвердить оплату</button>
                                             </form>
                                             @if(abs($order->total_amount - 10.00) < 0.01)
-                                            <form action="{{ route('admin.orders.test-check', $order->id) }}" method="POST" style="display: inline-block; margin-top: 0.5rem;">
+                                            <form action="{{ route('admin.orders.test-check', $order->id) }}" method="POST" class="admin-form-inline-mt">
                                                 @csrf
-                                                <button type="submit" class="btn btn-primary" style="font-size: 0.875rem;" onclick="return confirm('Тестовая проверка для заказа на 10₽?')">🧪 Тест</button>
+                                                <button type="submit" class="btn btn-primary admin-btn-sm" data-confirm="Тестовая проверка для заказа на 10₽?">🧪 Тест</button>
                                             </form>
                                             @endif
                                         @endif
@@ -154,7 +154,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="11" style="text-align: center; padding: 2rem;">Заказы не найдены</td>
+                                    <td colspan="11" class="admin-table-empty">Заказы не найдены</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -170,6 +170,7 @@
 
     <script src="{{ asset('assets/js/backgraund.js') }}" defer></script>
     <script src="{{ asset('assets/js/matrix.js') }}" defer></script>
+    <script src="{{ asset('assets/js/admin-confirm.js') }}" defer></script>
 </body>
 </html>
 

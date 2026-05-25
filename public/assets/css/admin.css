@@ -702,3 +702,96 @@ label {
     }
 }
 
+/* Утилиты: вместо инлайнов в Blade */
+.admin-nav-logout-form {
+    margin: 0;
+}
+
+.admin-nav-logout-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.admin-table-empty {
+    text-align: center;
+    padding: 2rem;
+}
+
+.admin-form-inline {
+    display: inline-block;
+}
+
+.admin-form-inline-mt {
+    display: inline-block;
+    margin-top: 0.5rem;
+}
+
+.admin-form-inline-mr {
+    display: inline-block;
+    margin-right: 0.5rem;
+}
+
+.admin-btn-sm {
+    font-size: 0.875rem;
+}
+
+.admin-search-input {
+    flex: 1;
+    min-width: 200px;
+}
+
+.admin-dashboard-heading {
+    margin-bottom: 1rem;
+}
+
+.admin-flex-gap {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.admin-info-value-discount {
+    color: #bbf7d0;
+}
+
+.admin-total-strong {
+    font-size: 1.25rem;
+}
+
+.admin-info-card-warn {
+    border-left: 3px solid #facc15;
+}
+
+.admin-p-mb {
+    margin-bottom: 1rem;
+}
+
+.admin-btn-disabled-muted {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.admin-mono-code {
+    font-family: monospace;
+    font-size: 1.1rem;
+}
+
+.admin-input-narrow {
+    width: 90px;
+    font-size: 0.75rem;
+}
+
+.admin-input-narrow-sm {
+    width: 70px;
+    font-size: 0.75rem;
+}
+
+.auth-form-group-tight {
+    margin-bottom: 0.6rem;
+}
+
+.auth-form-footer-spaced {
+    margin-bottom: 1.2rem;
+}
+

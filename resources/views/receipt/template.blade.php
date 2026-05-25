@@ -12,7 +12,7 @@
         <div class="header">
             <h1>ЧЕК ОБ ОПЛАТЕ</h1>
             <div class="order-number">Заказ №{{ $order->order_number }}</div>
-            <div style="margin-top: 10px; color: #666; font-size: 14px;">
+            <div class="receipt-date-meta">
                 Дата: {{ $order->created_at->format('d.m.Y H:i') }}
             </div>
         </div>
@@ -66,11 +66,11 @@
 @if($order->promoCode)
             <div class="info-row">
                 <span class="info-label">Промокод:</span>
-                <span class="info-value" style="color: #10b981; font-weight: bold;">{{ $order->promoCode->code }}</span>
+                <span class="info-value receipt-promo-value">{{ $order->promoCode->code }}</span>
             </div>
             <div class="info-row">
                 <span class="info-label">Скидка:</span>
-                <span class="info-value" style="color: #10b981; font-weight: bold;">-{{ number_format($order->discount_amount, 2, '.', ' ') }} ₽</span>
+                <span class="info-value receipt-promo-value">-{{ number_format($order->discount_amount, 2, '.', ' ') }} ₽</span>
             </div>
 @endif
         </div>
@@ -124,7 +124,7 @@
 
         <div class="footer">
             <p>Спасибо за покупку!</p>
-            <p style="margin-top: 10px;">EventGo</p>
+            <p class="receipt-footer-brand">EventGo</p>
         </div>
     </div>
 </body>

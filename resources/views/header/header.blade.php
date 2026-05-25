@@ -18,7 +18,7 @@
                 </ul>
             </div>
             <div class="header-content__rigth-content">
-                <svg class="menu-mob" onclick="toggleMenu()" width="34" height="25" viewBox="0 0 34 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg class="menu-mob" data-menu-open width="34" height="25" viewBox="0 0 34 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M1.25 1H32.75H1.25Z" fill="#918F8F"/>
                     <path d="M1.25 1H32.75" stroke="#282828" stroke-width="2" stroke-linecap="round"/>
                     <path d="M1.25 12.1631H32.75H1.25Z" fill="#918F8F"/>
@@ -48,7 +48,7 @@
                 </div>
             </div>
             <div class="mobile-menu" id="mobileMenu">
-    <span class="close-btn" onclick="closeToggleMenu()"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <span class="close-btn" data-menu-close><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M2 1.5L16 17M2 17L16 1" stroke="#DC143C" stroke-width="3"/>
 </svg>
 </span>

@@ -8,6 +8,7 @@ use App\Models\PromoCode;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\PaymentController;
 
 class AdminController extends Controller
 {
@@ -25,7 +26,7 @@ class AdminController extends Controller
     {
         $query = Order::with(['customer', 'ticket', 'promoCode']);
 
-        // Фильтрация
+        
         if ($request->has('status') && $request->status) {
             $query->where('payment_status', $request->status);
         }
@@ -78,6 +79,19 @@ class AdminController extends Controller
     {
         $tickets = Ticket::withCount('orders')->orderBy('created_at', 'desc')->get();
         return view('admin.tickets.index', compact('tickets'));
+    }
+
+    public function updateTicketPrice(Request $request, Ticket $ticket)
+    {
+        $data = $request->validate([
+            'price' => ['required', 'numeric', 'min:0'],
+        ]);
+
+        $ticket->update([
+            'price' => $data['price'],
+        ]);
+
+        return redirect()->route('admin.tickets.index')->with('success', 'Стоимость билета обновлена');
     }
 
     public function promoCodes()
@@ -135,12 +149,9 @@ class AdminController extends Controller
             return back()->with('error', 'Заказ уже оплачен');
         }
 
-        // Обновление статуса оплаты
         $order->update(['payment_status' => 'paid']);
 
-        // Генерация и отправка чека
-        $paymentController = new \App\Http\Controllers\PaymentController();
-        $paymentController->generateAndSendReceipt($order);
+        app(PaymentController::class)->generateAndSendReceipt($order);
 
         return back()->with('success', 'Оплата подтверждена. Чек и билет отправлены на email покупателя.');
     }
@@ -153,17 +164,13 @@ class AdminController extends Controller
             return back()->with('error', 'Заказ уже оплачен');
         }
 
-        // Проверка суммы для тестовой проверки
         if (abs($order->total_amount - 10.00) > 0.01) {
             return back()->with('error', 'Тестовая проверка работает только для заказов на сумму 10 рублей. Текущая сумма: ' . $order->formatted_total_amount);
         }
 
-        // Обновление статуса оплаты
         $order->update(['payment_status' => 'paid']);
 
-        // Генерация и отправка чека
-        $paymentController = new \App\Http\Controllers\PaymentController();
-        $paymentController->generateAndSendReceipt($order);
+        app(PaymentController::class)->generateAndSendReceipt($order);
 
         return back()->with('success', 'Тестовая проверка оплаты выполнена. Чек и билет отправлены на email покупателя: ' . $order->customer->email);
     }

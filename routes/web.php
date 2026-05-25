@@ -10,43 +10,37 @@ use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\PromoCodeController;
 use App\Http\Controllers\PageController;
 
-// Главная страница
 Route::get('/', [mainController::class, 'index'])->name('index');
 
 
 Route::get('/api/promo-code/check', [PromoCodeController::class, 'check'])->name('api.promo-code.check');
 
-// Информационные страницы
 Route::get('/requisites', [PageController::class, 'requisites'])->name('pages.requisites');
 Route::get('/agreement', [PageController::class, 'agreement'])->name('pages.agreement');
 Route::get('/delivery', [PageController::class, 'delivery'])->name('pages.delivery');
 Route::get('/contacts', [PageController::class, 'contacts'])->name('pages.contacts');
 
-// Билеты
 Route::get('/tickets', [TicketController::class, 'index'])->name('tickets.index');
 Route::get('/tickets/{id}', [TicketController::class, 'show'])->name('tickets.show');
 
-// Заказы
 Route::get('/order/{id}/form', [OrderController::class, 'showForm'])->name('orders.show');
 Route::post('/orders', [OrderController::class, 'create'])->name('orders.create');
 Route::get('/order/{id}/details', [OrderController::class, 'show'])->name('orders.details');
 Route::get('/order/{id}/checkout', [OrderController::class, 'checkout'])->name('orders.checkout');
 Route::post('/order/{id}/apply-promo', [OrderController::class, 'applyPromo'])->name('orders.apply_promo');
 
-// Оплата
 Route::get('/payment/{id}', [PaymentController::class, 'show'])->name('payment.show');
+Route::get('/payment/{id}/start', [PaymentController::class, 'start'])->name('payment.start');
 Route::post('/payment/{id}/confirm', [PaymentController::class, 'confirm'])->name('payment.confirm');
 Route::get('/order/{id}/success', [PaymentController::class, 'success'])->name('order.success');
 Route::post('/payment/webhook', [PaymentController::class, 'webhook'])->name('payment.webhook');
 Route::post('/payment/test-check/{id}', [PaymentController::class, 'testCheck'])->name('payment.test-check');
 
-// Админ панель - авторизация
 Route::prefix('admin')->group(function () {
     Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
     Route::post('/login', [AdminAuthController::class, 'login'])->name('admin.login.post');
     Route::post('/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
 
-    // Защищенные маршруты
     Route::middleware('auth:admin')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
         Route::get('/orders', [AdminController::class, 'orders'])->name('admin.orders.index');
@@ -55,6 +49,7 @@ Route::prefix('admin')->group(function () {
         Route::post('/orders/{id}/test-check', [AdminController::class, 'testCheckPayment'])->name('admin.orders.test-check');
         Route::get('/customers', [AdminController::class, 'customers'])->name('admin.customers.index');
         Route::get('/tickets', [AdminController::class, 'tickets'])->name('admin.tickets.index');
+        Route::patch('/tickets/{ticket}/price', [AdminController::class, 'updateTicketPrice'])->name('admin.tickets.update-price');
         Route::get('/promo-codes', [AdminController::class, 'promoCodes'])->name('admin.promo_codes.index');
         Route::post('/promo-codes', [AdminController::class, 'storePromoCode'])->name('admin.promo_codes.store');
         Route::patch('/promo-codes/{promoCode}', [AdminController::class, 'updatePromoCode'])->name('admin.promo_codes.update');

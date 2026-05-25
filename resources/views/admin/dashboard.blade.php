@@ -44,9 +44,9 @@
                         <a href="{{ route('admin.promo_codes.index') }}" class="nav-link">Промокоды</a>
                     </li>
                     <li class="nav-item">
-                        <form action="{{ route('admin.logout') }}" method="POST" style="margin: 0;">
+                        <form action="{{ route('admin.logout') }}" method="POST" class="admin-nav-logout-form">
                             @csrf
-                            <button type="submit" class="nav-link" style="background: none; border: none; cursor: pointer;">Выход</button>
+                            <button type="submit" class="nav-link admin-nav-logout-btn">Выход</button>
                         </form>
                     </li>
                 </ul>
@@ -84,8 +84,8 @@
                 </div>
 
                 <div class="panel">
-                    <h2 style="margin-bottom: 1rem;">Быстрые действия</h2>
-                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <h2 class="admin-dashboard-heading">Быстрые действия</h2>
+                    <div class="admin-flex-gap">
                         <a href="{{ route('admin.orders.index') }}" class="btn btn-primary">Просмотр заказов</a>
                         <a href="{{ route('admin.customers.index') }}" class="btn btn-primary">Просмотр покупателей</a>
                         <a href="{{ route('admin.tickets.index') }}" class="btn btn-primary">Управление билетами</a>

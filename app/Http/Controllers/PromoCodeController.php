@@ -35,7 +35,6 @@ class PromoCodeController extends Controller
             ]);
         }
 
-        // Расчет скидки
         $discountAmount = $promoCode->calculateDiscount($amount);
         $discountText = $promoCode->discount_type === 'percentage' 
             ? $promoCode->discount_value . '%' 

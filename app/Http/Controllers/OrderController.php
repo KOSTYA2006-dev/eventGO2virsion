@@ -29,7 +29,6 @@ class OrderController extends Controller
             'email' => 'required|email|max:255',
             'activity_type' => 'required|in:podologist,aesthetician,manager',
             'personal_data_agreement' => 'required|accepted',
-            'payment_method' => 'required|in:qr,sbp',
         ]);
 
         if ($validator->fails()) {
@@ -41,12 +40,10 @@ class OrderController extends Controller
 
             $ticket = Ticket::findOrFail($request->ticket_id);
             
-            // Проверка доступности билетов
             if ($ticket->available_quantity < $request->quantity) {
                 return back()->withErrors(['quantity' => 'Недостаточно доступных билетов'])->withInput();
             }
 
-            // Создание или поиск покупателя
             $customer = Customer::firstOrCreate(
                 ['email' => $request->email],
                 [
@@ -58,7 +55,6 @@ class OrderController extends Controller
                 ]
             );
 
-            // Обновление данных покупателя если они изменились
             $customer->update([
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
@@ -67,13 +63,11 @@ class OrderController extends Controller
                 'personal_data_agreement' => true,
             ]);
 
-            // Расчет суммы
             $ticketPrice = $ticket->price;
             $subtotal = $ticketPrice * $request->quantity;
             $discountAmount = 0;
             $totalAmount = $subtotal;
 
-            // Создание заказа
             $order = Order::create([
                 'customer_id' => $customer->id,
                 'ticket_id' => $ticket->id,
@@ -82,11 +76,10 @@ class OrderController extends Controller
                 'promo_code_id' => null,
                 'discount_amount' => $discountAmount,
                 'total_amount' => $totalAmount,
-                'payment_method' => $request->payment_method,
+                'payment_method' => 'yookassa',
                 'payment_status' => 'pending',
             ]);
 
-            // Уменьшение доступного количества билетов
             $ticket->decrement('available_quantity', $request->quantity);
 
             DB::commit();
@@ -119,7 +112,6 @@ class OrderController extends Controller
 
         $subtotal = (float) $order->ticket_price * (int) $order->quantity;
 
-        // Удаление промокода (пустое значение)
         if (empty($data['promo_code'])) {
             $order->update([
                 'promo_code_id' => null,

@@ -40,6 +40,18 @@
             font-weight: bold;
             margin-top: 10px;
         }
+        .ticket-id {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            letter-spacing: 1px;
+            color: #0f172a;
+        }
         .ticket-body {
             padding: 20px 0;
         }
@@ -105,11 +117,16 @@
             <div class="ticket-header">
                 <h1>Ваш билет</h1>
                 <div class="ticket-number">№{{ $order->order_number }}</div>
+                <div class="ticket-id">Ticket ID: EVT-{{ $order->id }}-{{ $order->ticket_id }}</div>
             </div>
 
             <div class="ticket-body">
                 <div class="ticket-section">
                     <h3>Информация о мероприятии</h3>
+                    <div class="ticket-row">
+                        <strong>ID билета:</strong>
+                        <span>EVT-{{ $order->id }}-{{ $order->ticket_id }}</span>
+                    </div>
                     <div class="ticket-row">
                         <strong>Название билета:</strong>
                         <span>{{ $order->ticket->name }}</span>

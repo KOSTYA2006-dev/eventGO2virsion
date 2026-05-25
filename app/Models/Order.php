@@ -80,6 +80,7 @@ class Order extends Model
     public function getPaymentMethodLabelAttribute(): string
     {
         return match($this->payment_method) {
+            'yookassa' => 'ЮKassa',
             'qr' => 'QR код',
             'sbp' => 'СБП',
             default => $this->payment_method,

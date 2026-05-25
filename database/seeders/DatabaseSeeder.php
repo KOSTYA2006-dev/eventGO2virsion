@@ -15,15 +15,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Создание администратора
+    
         Admin::create([
             'name' => 'Администратор',
             'email' => 'admin@eventgo.ru',
-            // ВАЖНО: передаём сюда обычный пароль, он захешируется автоматически через cast
+            
             'password' => 'admin123',
         ]);
 
-        // Создание билетов (250 обычных, 50 VIP по ТЗ)
+     
         Ticket::create([
             'name' => 'Обычный билет',
             'type' => 'regular',

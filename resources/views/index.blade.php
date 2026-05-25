@@ -16,10 +16,23 @@
 
     <div class="content-wrapper">
         <header>
-            <nav class="container">
+            <nav class="container home-nav">
                 <div class="logo">EVENTGO</div>
-                <div>
-                    <a href="{{ route('admin.login') }}" class="admin-link">ADMIN</a>
+                <div class="header-socials" aria-label="Социальные сети">
+                    <a class="social-link social-link--tg" href="https://t.me/podolog_rostov_sila" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+                        <span class="social-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" class="social-svg">
+                                <path d="M9.04 15.47 8.8 18.9c.36 0 .52-.16.71-.35l1.7-1.63 3.53 2.58c.65.36 1.1.17 1.27-.6l2.3-10.78c.2-.94-.34-1.31-.98-1.07L4.7 10.07c-.92.36-.9.88-.16 1.1l3.43 1.07 7.96-5.02c.38-.23.72-.1.44.13l-6.47 5.86Z"/>
+                            </svg>
+                        </span>
+                    </a>
+                    <a class="social-link social-link--vk" href="https://vk.ru/studia_sila" target="_blank" rel="noopener noreferrer" aria-label="ВКонтакте">
+                        <span class="social-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" class="social-svg">
+                                <path d="M12.96 16.83c-3.7 0-5.81-2.54-5.9-6.77h1.85c.06 3.11 1.43 4.43 2.51 4.7V10.06h1.74v2.68c1.06-.11 2.17-1.34 2.55-2.68h1.74c-.29 1.66-1.49 2.89-2.34 3.4.85.41 2.2 1.49 2.72 3.37h-1.92c-.41-1.29-1.44-2.29-2.75-2.43v2.43h-.2Z"/>
+                            </svg>
+                        </span>
+                    </a>
                 </div>
             </nav>
         </header>
@@ -110,13 +123,13 @@
                         <div class="photo-slides" data-carousel-slides>
                             <div class="photo-slide">
                                 <div class="photo-visual">
-                                    <div class="photo-card photo-card-main" style="background-image: linear-gradient(135deg, #02130a, #053d1e);">
+                                    <div class="photo-card photo-card-main photo-card-bg-a">
                                         <div class="photo-card-label">Зал мероприятия</div>
                                     </div>
-                                    <div class="photo-card" style="background-image: linear-gradient(135deg, #02130a, #0b5130);">
+                                    <div class="photo-card photo-card-bg-b">
                                         <div class="photo-card-label">Живые выступления</div>
                                     </div>
-                                    <div class="photo-card" style="background-image: linear-gradient(135deg, #02130a, #04502c);">
+                                    <div class="photo-card photo-card-bg-c">
                                         <div class="photo-card-label">Работа с залом</div>
                                     </div>
                                 </div>
@@ -136,13 +149,13 @@
 
                             <div class="photo-slide">
                                 <div class="photo-visual">
-                                    <div class="photo-card photo-card-main" style="background-image: linear-gradient(135deg, #02130a, #064221);">
+                                    <div class="photo-card photo-card-main photo-card-bg-d">
                                         <div class="photo-card-label">Нетворкинг</div>
                                     </div>
-                                    <div class="photo-card" style="background-image: linear-gradient(135deg, #02130a, #074f29);">
+                                    <div class="photo-card photo-card-bg-e">
                                         <div class="photo-card-label">Кулуарные обсуждения</div>
                                     </div>
-                                    <div class="photo-card" style="background-image: linear-gradient(135deg, #02130a, #0b6b35);">
+                                    <div class="photo-card photo-card-bg-f">
                                         <div class="photo-card-label">Новые знакомства</div>
                                     </div>
                                 </div>
@@ -162,13 +175,13 @@
 
                             <div class="photo-slide">
                                 <div class="photo-visual">
-                                    <div class="photo-card photo-card-main" style="background-image: linear-gradient(135deg, #02130a, #055024);">
+                                    <div class="photo-card photo-card-main photo-card-bg-g">
                                         <div class="photo-card-label">Практика</div>
                                     </div>
-                                    <div class="photo-card" style="background-image: linear-gradient(135deg, #02130a, #0a5a31);">
+                                    <div class="photo-card photo-card-bg-h">
                                         <div class="photo-card-label">Разборы кейсов</div>
                                     </div>
-                                    <div class="photo-card" style="background-image: linear-gradient(135deg, #02130a, #0a7440);">
+                                    <div class="photo-card photo-card-bg-i">
                                         <div class="photo-card-label">Ответы на вопросы</div>
                                     </div>
                                 </div>
@@ -209,27 +222,66 @@
                             @endforeach
                         </div>
                     @else
-                        <p style="text-align: center; color: #00ff41; padding: 2rem; opacity: 0.7;">Билеты пока не доступны</p>
+                        <p class="tickets-empty">Билеты пока не доступны</p>
                     @endif
+                </div>
+            </div>
+
+            <div class="container" id="location">
+                <div class="location-section">
+                    <h2 class="section-title">ГДЕ ПРОЙДЁТ МЕРОПРИЯТИЕ</h2>
+                    <div class="location-grid">
+                        <div class="location-card">
+                            <div class="location-title">ДонЭкспоцентр</div>
+                            <div class="location-address">Ростов-на-Дону, пр-т Михаила Нагибина, 30</div>
+                            <div class="location-note">
+                                Удобная парковка и транспортная доступность. После покупки билет и чек придут на email.
+                            </div>
+                            <a class="location-route" href="https://www.google.com/maps?q=%D0%94%D0%BE%D0%BD%D0%AD%D0%BA%D1%81%D0%BF%D0%BE%D1%86%D0%B5%D0%BD%D1%82%D1%80%2C+%D0%BF%D1%80%D0%BE%D1%81%D0%BF%D0%B5%D0%BA%D1%82+%D0%9C%D0%B8%D1%85%D0%B0%D0%B8%D0%BB%D0%B0+%D0%9D%D0%B0%D0%B3%D0%B8%D0%B1%D0%B8%D0%BD%D0%B0+30%2C+%D0%A0%D0%BE%D1%81%D1%82%D0%BE%D0%B2-%D0%BD%D0%B0-%D0%94%D0%BE%D0%BD%D1%83" target="_blank" rel="noopener noreferrer">
+                                Построить маршрут
+                            </a>
+                        </div>
+                        <div class="location-map">
+                            <iframe
+                                title="Карта: ДонЭкспоцентр, Ростов-на-Дону"
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"
+                                src="https://www.google.com/maps?q=%D0%94%D0%BE%D0%BD%D0%AD%D0%BA%D1%81%D0%BF%D0%BE%D1%86%D0%B5%D0%BD%D1%82%D1%80%2C+%D0%BF%D1%80%D0%BE%D1%81%D0%BF%D0%B5%D0%BA%D1%82+%D0%9C%D0%B8%D1%85%D0%B0%D0%B8%D0%BB%D0%B0+%D0%9D%D0%B0%D0%B3%D0%B8%D0%B1%D0%B8%D0%BD%D0%B0+30%2C+%D0%A0%D0%BE%D1%81%D1%82%D0%BE%D0%B2-%D0%BD%D0%B0-%D0%94%D0%BE%D0%BD%D1%83&output=embed">
+                            </iframe>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
 
         <footer>
             <div class="container">
-                <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 1rem;">
-                    <a href="{{ route('pages.requisites') }}" style="color: #00ff41; text-decoration: none; transition: all 0.3s;">Реквизиты</a>
-                    <a href="{{ route('pages.agreement') }}" style="color: #00ff41; text-decoration: none; transition: all 0.3s;">Пользовательское соглашение</a>
-                    <a href="{{ route('pages.delivery') }}" style="color: #00ff41; text-decoration: none; transition: all 0.3s;">Доставка и получение</a>
-                    <a href="{{ route('pages.contacts') }}" style="color: #00ff41; text-decoration: none; transition: all 0.3s;">Контакты</a>
+                <div class="footer-links-row">
+                    <a href="{{ route('pages.requisites') }}" class="footer-link">Реквизиты</a>
+                    <a href="{{ route('pages.agreement') }}" class="footer-link">Пользовательское соглашение</a>
+                    <a href="{{ route('pages.delivery') }}" class="footer-link">Доставка и получение</a>
+                    <a href="{{ route('pages.contacts') }}" class="footer-link">Контакты</a>
                 </div>
                 <p>&copy; {{ date('Y') }} EventGo. Все права защищены.</p>
-                <p style="margin-top: 0.5rem; font-size: 0.875rem; opacity: 0.8;">
+                <p class="footer-legal-meta">
                     ИНН: {{ config('payment.vtb_inn', '616404172802') }} |
                     ОГРНИП: {{ config('payment.ogrnip', '316616400101234') }}
                 </p>
             </div>
         </footer>
+    </div>
+
+    <div class="social-float" aria-label="Социальные сети">
+        <a class="social-float-link social-link--tg" href="https://t.me/podolog_rostov_sila" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+            <svg viewBox="0 0 24 24" class="social-float-svg" aria-hidden="true">
+                <path d="M9.04 15.47 8.8 18.9c.36 0 .52-.16.71-.35l1.7-1.63 3.53 2.58c.65.36 1.1.17 1.27-.6l2.3-10.78c.2-.94-.34-1.31-.98-1.07L4.7 10.07c-.92.36-.9.88-.16 1.1l3.43 1.07 7.96-5.02c.38-.23.72-.1.44.13l-6.47 5.86Z"/>
+            </svg>
+        </a>
+        <a class="social-float-link social-link--vk" href="https://vk.ru/studia_sila" target="_blank" rel="noopener noreferrer" aria-label="ВКонтакте">
+            <svg viewBox="0 0 24 24" class="social-float-svg" aria-hidden="true">
+                <path d="M12.96 16.83c-3.7 0-5.81-2.54-5.9-6.77h1.85c.06 3.11 1.43 4.43 2.51 4.7V10.06h1.74v2.68c1.06-.11 2.17-1.34 2.55-2.68h1.74c-.29 1.66-1.49 2.89-2.34 3.4.85.41 2.2 1.49 2.72 3.37h-1.92c-.41-1.29-1.44-2.29-2.75-2.43v2.43h-.2Z"/>
+            </svg>
+        </a>
     </div>
 
     <script src="{{ asset('assets/js/backgraund.js') }}" defer></script>

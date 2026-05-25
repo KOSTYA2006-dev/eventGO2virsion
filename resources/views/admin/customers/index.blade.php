@@ -44,9 +44,9 @@
                         <a href="{{ route('admin.promo_codes.index') }}" class="nav-link">Промокоды</a>
                     </li>
                     <li class="nav-item">
-                        <form action="{{ route('admin.logout') }}" method="POST" style="margin: 0;">
+                        <form action="{{ route('admin.logout') }}" method="POST" class="admin-nav-logout-form">
                             @csrf
-                            <button type="submit" class="nav-link" style="background: none; border: none; cursor: pointer;">Выход</button>
+                            <button type="submit" class="nav-link admin-nav-logout-btn">Выход</button>
                         </form>
                     </li>
                 </ul>
@@ -59,7 +59,7 @@
 
                 <div class="filters">
                     <form method="GET" action="{{ route('admin.customers.index') }}">
-                        <input type="text" name="search" placeholder="Поиск по имени, email, телефону..." value="{{ request('search') }}" style="flex: 1; min-width: 200px;">
+                        <input type="text" name="search" placeholder="Поиск..." value="{{ request('search') }}">
                         <select name="activity_type">
                             <option value="">Все виды деятельности</option>
                             <option value="podologist" {{ request('activity_type') === 'podologist' ? 'selected' : '' }}>Подолог</option>
@@ -74,29 +74,27 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>Фамилия</th>
-                                <th>Имя</th>
-                                <th>Телефон</th>
+                                <th>ФИО</th>
                                 <th>Email</th>
-                                <th>Вид деятельности</th>
-                                <th>Количество заказов</th>
+                                <th>Телефон</th>
+                                <th>Деятельность</th>
+                                <th>Заказов</th>
                                 <th>Дата регистрации</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($customers as $customer)
                                 <tr>
-                                    <td><strong>{{ $customer->last_name }}</strong></td>
-                                    <td>{{ $customer->first_name }}</td>
-                                    <td>{{ $customer->phone }}</td>
+                                    <td>{{ $customer->full_name }}</td>
                                     <td>{{ $customer->email }}</td>
+                                    <td>{{ $customer->phone }}</td>
                                     <td>{{ $customer->activity_type_label }}</td>
-                                    <td><strong>{{ $customer->orders_count }}</strong></td>
+                                    <td>{{ $customer->orders_count }}</td>
                                     <td>{{ $customer->created_at->format('d.m.Y H:i') }}</td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7" style="text-align: center; padding: 2rem;">Покупатели не найдены</td>
+                                    <td colspan="6" class="admin-table-empty">Покупатели не найдены</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -114,4 +112,3 @@
     <script src="{{ asset('assets/js/matrix.js') }}" defer></script>
 </body>
 </html>
-

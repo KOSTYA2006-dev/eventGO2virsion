@@ -55,7 +55,7 @@
                         >
                     </div>
 
-                    <div class="form-group" style="margin-bottom: 0.6rem;">
+                    <div class="form-group auth-form-group-tight">
                         <label for="password">Пароль</label>
                         <input
                             id="password"
@@ -68,7 +68,7 @@
                         >
                     </div>
 
-                    <div class="form-footer" style="margin-bottom: 1.2rem;">
+                    <div class="form-footer auth-form-footer-spaced">
                         <label class="checkbox-label">
                             <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
                             <span>Запомнить меня</span>
@@ -82,7 +82,7 @@
 
                 <div class="auth-helper">
                     Тестовый доступ: <code>admin@eventgo.ru / admin123</code><br>
-                    (после запуска проекта рекомендуется сменить пароль)
+                    
                 </div>
             </div>
         </main>
